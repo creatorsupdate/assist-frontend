@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Icon } from 'react';
+import React, { useState, useEffect} from 'react';
 import api from './api';
 import Header from './header';
 import { 
@@ -14,10 +14,10 @@ import {
     DialogContentText, 
     TextField, 
     DialogActions} from '@material-ui/core';
-//import './style.css';
+import './style.css';
 
 function App() {
-    const [ lista, setLista ] = useState([]);
+    const [ atendimento, setAtendimento ] = useState([]);
     const [ open, setOpen ] = useState(false);
     const [ cliente, setCliente ] = useState('');
     const [ servico, setServico ] = useState('');
@@ -42,10 +42,10 @@ function App() {
         setOpen(false);
     };
 
-    function listaAssistencia(){
+    function listaAtendimento(){
          api.get('/assistencia').then((response) => {
             const itens = response.data;
-            setLista(itens);
+            setAtendimento(itens);
                 setCliente('');
                 setServico('');
                 setOrcamento('');
@@ -54,7 +54,7 @@ function App() {
         });
     };
 useEffect(() => {
-        listaAssistencia();
+        listaAtendimento();
     }, []);
     
     function addAtendimento(){
@@ -71,12 +71,12 @@ useEffect(() => {
             setSituacao('');
             setId('');
             setOpen(false);
-            listaAssistencia();
+            listaAtendimento();
         });
     };
 function deleteAtendimento(id){
         api.delete(`/assistencia/${id}`).then((response) => {
-            listaAssistencia();
+            listaAtendimento();
         });
     };
 
@@ -100,7 +100,7 @@ function deleteAtendimento(id){
             setOrcamento('');
             setSituacao('');
             setId('');
-            listaAssistencia();
+            listaAtendimento();
         });
     };
 
@@ -120,14 +120,13 @@ function deleteAtendimento(id){
                         
                         </TableRow>
                 </TableHead>
-                {lista.map(itens => (
+                {atendimento.map(itens => (
                     <TableRow key={itens.id}>
                         <TableCell>{itens.id}</TableCell>
-                        <TableCell>{itens.Id}</TableCell>
-                        <TableCell>{itens.Cliente}</TableCell>
-                        <TableCell>{itens.Servico}</TableCell>
-                        <TableCell>{itens.Orcamento}</TableCell>
-                        <TableCell>{itens.Situacao}</TableCell>
+                        <TableCell>{itens.cliente}</TableCell>
+                        <TableCell>{itens.servico}</TableCell>
+                        <TableCell>{itens.orcamento}</TableCell>
+                        <TableCell>{itens.situacao}</TableCell>
 
                         <TableCell>
                             &nbsp;
