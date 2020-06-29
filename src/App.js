@@ -25,7 +25,7 @@ function App() {
     const [ situacao, setSituacao] = useState('');
     const [ id, setId ] = useState('');
     const [ botaoEditar, setBotaoEditar ] = useState(false);
-    const [ botaoAdicionar, setBotaoAdicionar ] = useState(false);
+    const [ botaoAdicionar, setBotaoAdicionar ] = useState(true);
 
     function openModal() {
         setBotaoAdicionar(true);
@@ -58,13 +58,13 @@ useEffect(() => {
     }, []);
     
     function addAtendimento(){
-        const client = cliente;
-        const service = servico;
-        const buget = orcamento;
-        const situation = situacao;
+        const cliente = cliente;
+        const servico = servico;
+        const orcamento = orcamento;
+        const situacao = situacao;
         
         // post ingles
-        api.post('/assistencia', {cliente:client, servico: service, orcamento: buget, situacao: situation}).then((response) => {
+        api.post('/assistencia', {cliente:cliente, servico: servico, orcamento: orcamento, situacao: situacao}).then((response) => {
             setCliente('');
             setServico('');
             setOrcamento('');
@@ -81,7 +81,7 @@ function deleteAtendimento(id){
     };
 
     function openEditar(id,cliente,servico,orcamento,situacao){
-        setBotaoAdicionar(false);
+        setBotaoAdicionar(true);
         setBotaoEditar(true);
         setCliente('');
         setServico('');
