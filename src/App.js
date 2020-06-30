@@ -17,7 +17,7 @@ import {
 import './style.css';
 
 function App() {
-    const [ atendimento, setAtendimento ] = useState([]);
+    const [ lista, setLista ] = useState([]);
     const [ open, setOpen ] = useState(false);
     const [ cliente, setCliente ] = useState('');
     const [ servico, setServico ] = useState('');
@@ -25,9 +25,9 @@ function App() {
     const [ situacao, setSituacao] = useState('');
     const [ id, setId ] = useState('');
     const [ botaoEditar, setBotaoEditar ] = useState(false);
-    const [ botaoAdicionar, setBotaoAdicionar ] = useState(true);
+    const [ botaoAdicionar, setBotaoAdicionar ] = useState(false);
 
-    function openModal() {
+  function openModal() {
         setBotaoAdicionar(true);
         setBotaoEditar(false);
         setCliente('');
@@ -42,10 +42,10 @@ function App() {
         setOpen(false);
     };
 
-    function listaAtendimento(){
+    function listaAssistencia(){
          api.get('/assistencia').then((response) => {
             const itens = response.data;
-            setAtendimento(itens);
+            setLista(itens);
                 setCliente('');
                 setServico('');
                 setOrcamento('');
@@ -54,7 +54,7 @@ function App() {
         });
     };
 useEffect(() => {
-        listaAtendimento();
+        listaAssistencia();
     }, []);
     
     function addAtendimento(){
@@ -71,12 +71,12 @@ useEffect(() => {
             setSituacao('');
             setId('');
             setOpen(false);
-            listaAtendimento();
+            listaAssistencia();
         });
     };
 function deleteAtendimento(id){
         api.delete(`/assistencia/${id}`).then((response) => {
-            listaAtendimento();
+            listaAssistencia();
         });
     };
 
@@ -100,7 +100,7 @@ function deleteAtendimento(id){
             setOrcamento('');
             setSituacao('');
             setId('');
-            listaAtendimento();
+            listaAssistencia();
         });
     };
 
@@ -120,7 +120,7 @@ function deleteAtendimento(id){
                         
                         </TableRow>
                 </TableHead>
-                {atendimento.map(itens => (
+                {lista.map(itens => (
                     <TableRow key={itens.id}>
                         <TableCell>{itens.id}</TableCell>
                         <TableCell>{itens.cliente}</TableCell>
@@ -201,7 +201,7 @@ function deleteAtendimento(id){
                     id="situacao"
                     label="Situacao"
                     autoComplete="off"
-                    type="textr"
+                    type="text"
                     fullWidth
                     value={situacao}
                     onChange={e => setSituacao(e.target.value)}
