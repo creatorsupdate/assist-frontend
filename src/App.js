@@ -3,7 +3,8 @@ import api from './api';
 import Header from './header';
 import { 
     Container, 
-    Table, 
+    Table,
+    TableBody, 
     TableRow, 
     TableCell, 
     TableHead,
@@ -58,11 +59,7 @@ useEffect(() => {
     }, []);
     
     function addAtendimento(){
-        const cliente = cliente;
-        const servico = servico;
-        const orcamento = orcamento;
-        const situacao = situacao;
-        
+                
         // post ingles
         api.post('/assistencia', {cliente:cliente, servico: servico, orcamento: orcamento, situacao: situacao}).then((response) => {
             setCliente('');
@@ -83,11 +80,11 @@ function deleteAtendimento(id){
     function openEditar(id,cliente,servico,orcamento,situacao){
         setBotaoAdicionar(true);
         setBotaoEditar(true);
-        setCliente('');
-        setServico('');
-        setOrcamento('');
-        setSituacao('');
-        setId('');
+        setCliente(cliente);
+        setServico(servico);
+        setOrcamento(orcamento);
+        setSituacao(situacao);
+        setId(id);
         setOpen(true);
 
       };
@@ -120,6 +117,7 @@ function deleteAtendimento(id){
                         
                         </TableRow>
                 </TableHead>
+                <TableBody>
                 {lista.map(itens => (
                     <TableRow key={itens.id}>
                         <TableCell>{itens.id}</TableCell>
@@ -133,7 +131,7 @@ function deleteAtendimento(id){
                             <Button 
                                 color="primary"
                                 variant="outlined" 
-                                onClick={() => openEditar(itens.id,itens.Cliente, itens.Servico, itens.Orcamento, itens.Situacao)}
+                                onClick={() => openEditar(itens.id,itens.cliente, itens.servico, itens.orcamento, itens.situacao)}
                                 size="small"> 
                                 Editar 
                             </Button>
@@ -147,6 +145,7 @@ function deleteAtendimento(id){
                     </TableRow>
                      
                      ))}
+                     </TableBody>
             </Table>
             <Button 
                 onClick={openModal}
